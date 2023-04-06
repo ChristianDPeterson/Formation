@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@formation/data-access": ["packages/data-access/src/index.ts"],
+      "@formation/feature-sets": ["packages/feature-sets/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

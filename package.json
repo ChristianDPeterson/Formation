@@ -6,6 +6,9 @@
   "private": true,
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
+    "@graphql-codegen/cli": "^3.3.0",
+    "@graphql-codegen/typescript-operations": "^3.0.3",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@nrwl/cypress": "15.9.2",
@@ -50,6 +53,7 @@
     "typescript": "~4.9.5"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.11",
     "@apollo/gateway": "^2.4.1",
     "@apollo/server": "^4.6.0",
     "@as-integrations/fastify": "^1.3.2",

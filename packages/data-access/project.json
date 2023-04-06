@@ -1,0 +1,28 @@
+{
+	"name": "data-access",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "packages/data-access/src",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": [
+					"packages/data-access/**/*.{ts,tsx,js,jsx}"
+				]
+			}
+		},
+		"generate": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": [
+					{
+						"command": "npx graphql-codegen --config packages/data-access/codegen.yml"
+					}
+				]
+			}
+		}
+	}
+}

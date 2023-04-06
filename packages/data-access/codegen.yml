@@ -1,0 +1,13 @@
+overwrite: true
+schema: "packages/formation-api/src/app/schema.graphql"
+generates:
+    packages/data-access/src/lib/generated/generated.tsx:
+        documents: "packages/data-access/src/lib/**/*.graphql"
+        plugins:
+            - "typescript"
+            - "typescript-operations"
+            - "typescript-react-apollo"
+        config:
+            withHooks: true
+            withComponent: false
+            withHOC: false
