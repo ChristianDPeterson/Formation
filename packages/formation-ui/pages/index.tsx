@@ -1,15 +1,22 @@
 import React from "react";
 
-import { SetForm, SetList } from "@formation/feature-sets";
+import { useUserListQuery } from "@formation/data-access";
 
-const App = () => (
-	<>
-		<h1>My Lego Sets</h1>
-		<div className="flex">
-			<SetForm />
-			<SetList />
-		</div>
-	</>
-);
+const App = () => {
+	const { loading, error, data } = useUserListQuery();
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error :(</p>;
+
+	return (
+		<ul>
+			{data.getAllUsers.map(({ id, username }) => (
+				<li key={id}>
+					{id} - <strong>{username}</strong>
+				</li>
+			))}
+		</ul>
+	);
+};
 
 export default App;
