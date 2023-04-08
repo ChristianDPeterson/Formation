@@ -8,4 +8,7 @@ export class User implements UserClient {
 
 	@Field(() => String)
 	username: string;
+
+	@Field(() => String)
+	email: string;
 }

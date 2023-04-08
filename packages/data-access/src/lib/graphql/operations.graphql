@@ -2,6 +2,7 @@ query userList {
 	getAllUsers {
 		id
 		username
+		email
 	}
 }
 

@@ -17,19 +17,27 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  getAllUsers?: Maybe<Array<Maybe<User>>>;
+  getAllUsers: Array<User>;
+  getUserById: User;
+  healthCheck: Scalars['String'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  id: Scalars['Int'];
 };
 
 export type User = {
   __typename?: 'User';
+  email: Scalars['String'];
   id: Scalars['Int'];
-  username?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
 };
 
 export type UserListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserListQuery = { __typename?: 'Query', getAllUsers?: Array<{ __typename?: 'User', id: number, username?: string | null } | null> | null };
+export type UserListQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: number, username: string, email: string }> };
 
 
 export const UserListDocument = gql`
@@ -37,6 +45,7 @@ export const UserListDocument = gql`
   getAllUsers {
     id
     username
+    email
   }
 }
     `;

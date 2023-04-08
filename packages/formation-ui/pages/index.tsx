@@ -10,9 +10,9 @@ const App = () => {
 
 	return (
 		<ul>
-			{data.getAllUsers.map(({ id, username }) => (
+			{data.getAllUsers.map(({ id, username, email }) => (
 				<li key={id}>
-					{id} - <strong>{username}</strong>
+					{id} - <strong>{username}</strong> - {email}
 				</li>
 			))}
 		</ul>

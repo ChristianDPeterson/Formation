@@ -9,6 +9,7 @@ type Query {
 }
 
 type User {
+  email: String!
   id: Int!
   username: String!
 }

@@ -7,4 +7,10 @@ export class UserInput {
 		description: "User's name that will be visible",
 	})
 	username: string;
+
+	@Field(() => String, {
+		nullable: false,
+		description: "Email that will be visible",
+	})
+	email: string;
 }
