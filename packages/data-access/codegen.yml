@@ -1,5 +1,5 @@
 overwrite: true
-schema: "packages/formation-api/src/app/schema.graphql"
+schema: "packages/formation-api/src/schema.graphql"
 generates:
     packages/data-access/src/lib/generated/generated.tsx:
         documents: "packages/data-access/src/lib/**/*.graphql"

@@ -1,17 +1,15 @@
-query setList {
-	allSets {
+query userList {
+	getAllUsers {
 		id
-		name
-		numParts
-		year
+		username
 	}
 }
 
-mutation addSet($name: String!, $year: String!, $numParts: Int!) {
-	addSet(name: $name, year: $year, numParts: $numParts) {
-		id
-		name
-		numParts
-		year
-	}
-}
+# mutation addSet($name: String!, $year: String!, $numParts: Int!) {
+# 	addSet(name: $name, year: $year, numParts: $numParts) {
+# 		id
+# 		name
+# 		numParts
+# 		year
+# 	}
+# }

@@ -4,16 +4,20 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { SetResolver } from "./set.resolver";
+import { GraphQLBackendModule } from "./graphql/graphql.module";
 
 @Module({
 	imports: [
-		GraphQLModule.forRoot<ApolloDriverConfig>({
-			driver: ApolloDriver,
-			typePaths: ["./**/*.graphql"],
-		}),
+		// ConfigModule.forRoot({
+		// 	load: [redisConfig],
+		// 	cache: true,
+		// }),
+		GraphQLBackendModule,
+		// RedisClientModule,
+		// PubSubModule,
+		// LoggerModule,
 	],
-	controllers: [AppController],
-	providers: [AppService, SetResolver],
+	controllers: [], // AppController
+	providers: [AppService],
 })
 export class AppModule {}
