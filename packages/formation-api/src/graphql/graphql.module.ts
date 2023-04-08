@@ -3,9 +3,9 @@ import { Module } from "@nestjs/common";
 // import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 
-import { GraphQLHelper } from "./graphql.helper";
 import { GraphQLResolver } from "./graphql.resolver";
 import { UserModule } from "../modules/user/user.module";
+import { join } from "path";
 
 @Module({
 	imports: [
@@ -15,7 +15,11 @@ import { UserModule } from "../modules/user/user.module";
 			installSubscriptionHandlers: true,
 			fieldResolverEnhancers: ["filters"],
 			cache: "bounded",
-			autoSchemaFile: true,
+			autoSchemaFile: join(
+				process.cwd(),
+				"packages/formation-api/src/schema.graphql"
+			),
+			sortSchema: true,
 			// cors: {
 			// 	credentials: true,
 			// 	origin: true,

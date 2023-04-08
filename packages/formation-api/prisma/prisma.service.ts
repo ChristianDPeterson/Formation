@@ -51,4 +51,8 @@ export class PrismaService
 			await app.close();
 		});
 	}
+
+	async onModuleDestroy() {
+		await this.$disconnect();
+	}
 }

@@ -21,6 +21,14 @@
 			"configurations": {
 				"development": {},
 				"production": {}
+			},
+			"dependsOn": ["generate"]
+		},
+		"generate": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma generate",
+				"cwd": "packages/formation-api"
 			}
 		},
 		"serve": {
