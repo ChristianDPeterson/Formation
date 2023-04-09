@@ -6,20 +6,23 @@ const userData = [
 	{
 		username: "Alice",
 		email: "alice@gmail.com",
+		password: "alice123",
 	},
 	{
 		username: "Nilu",
 		email: "nilu@gmail.com",
+		password: "nilu123",
 	},
 	{
 		username: "Mahmoud",
 		email: "mahmoud@gmail.com",
+		password: "mahmoud123",
 	},
 ];
 
 async function main() {
 	console.log(`Start seeding ...`);
-	// Delete all `User` and `Message` records
+	// Delete all `User` records
 	await prisma.user.deleteMany({});
 
 	for (const u of userData) {

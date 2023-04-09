@@ -4,7 +4,7 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 
 import { GraphQLResolver } from "./graphql.resolver";
-import { UserModule } from "../modules/user/user.module";
+import { UserModule } from "../user/user.module";
 import { join } from "path";
 
 @Module({

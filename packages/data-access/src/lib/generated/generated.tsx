@@ -15,6 +15,18 @@ export type Scalars = {
   Float: number;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createUser: User;
+};
+
+
+export type MutationCreateUserArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAllUsers: Array<User>;
@@ -24,20 +36,30 @@ export type Query = {
 
 
 export type QueryGetUserByIdArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
-  id: Scalars['Int'];
+  id: Scalars['String'];
+  password: Scalars['String'];
   username: Scalars['String'];
 };
 
 export type UserListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserListQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: number, username: string, email: string }> };
+export type UserListQuery = { __typename?: 'Query', getAllUsers: Array<{ __typename?: 'User', id: string, username: string, email: string, password: string }> };
+
+export type CreateUserMutationVariables = Exact<{
+  username: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, username: string, email: string } };
 
 
 export const UserListDocument = gql`
@@ -46,6 +68,7 @@ export const UserListDocument = gql`
     id
     username
     email
+    password
   }
 }
     `;
@@ -76,3 +99,40 @@ export function useUserListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<U
 export type UserListQueryHookResult = ReturnType<typeof useUserListQuery>;
 export type UserListLazyQueryHookResult = ReturnType<typeof useUserListLazyQuery>;
 export type UserListQueryResult = Apollo.QueryResult<UserListQuery, UserListQueryVariables>;
+export const CreateUserDocument = gql`
+    mutation createUser($username: String!, $email: String!, $password: String!) {
+  createUser(username: $username, email: $email, password: $password) {
+    id
+    username
+    email
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      username: // value for 'username'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

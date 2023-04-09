@@ -5,6 +5,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { GraphQLBackendModule } from "./graphql/graphql.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
 	imports: [
@@ -13,11 +14,12 @@ import { GraphQLBackendModule } from "./graphql/graphql.module";
 		// 	cache: true,
 		// }),
 		GraphQLBackendModule,
+		AuthModule,
 		// RedisClientModule,
 		// PubSubModule,
 		// LoggerModule,
 	],
-	controllers: [], // AppController
+	controllers: [AppController], // AppController
 	providers: [AppService],
 })
 export class AppModule {}

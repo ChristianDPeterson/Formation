@@ -2,14 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  createUser(email: String!, password: String!, username: String!): User!
+}
+
 type Query {
   getAllUsers: [User!]!
-  getUserById(id: Int!): User!
+  getCurrentUser: User!
+  getUserById(id: String!): User!
   healthCheck: String!
 }
 
 type User {
   email: String!
-  id: Int!
+  id: String!
+  password: String!
   username: String!
 }
