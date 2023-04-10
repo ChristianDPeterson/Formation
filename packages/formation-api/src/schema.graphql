@@ -2,10 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Mutation {
-  createUser(email: String!, password: String!, username: String!): User!
-}
-
 type Query {
   getAllUsers: [User!]!
   getCurrentUser: User!

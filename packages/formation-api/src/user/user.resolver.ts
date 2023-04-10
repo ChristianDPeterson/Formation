@@ -28,13 +28,4 @@ export class UserResolver {
 	async getCurrentUser(@CurrentUser() user: User): Promise<User> {
 		return this.userService.getUserById(user.id);
 	}
-
-	@Mutation(() => User)
-	async createUser(
-		@Args("username", { type: () => String }) username: string,
-		@Args("email", { type: () => String }) email: string,
-		@Args("password", { type: () => String }) password: string
-	): Promise<User> {
-		return this.userService.createUser(username, email, password);
-	}
 }

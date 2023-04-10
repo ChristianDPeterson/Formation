@@ -1,30 +1,32 @@
 import React from "react";
 
-import { useCreateUserMutation } from "@formation/data-access";
+import TokenService from "../services/token.service";
+import Router from "next/router";
 
 const App = () => {
-	const [createUser] = useCreateUserMutation({
-		refetchQueries: ["userList"],
-	});
-
 	const [username, setUsername] = React.useState("");
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
 
-		createUser({
-			variables: {
-				username,
-				email,
-				password,
+		const response = await fetch("http://localhost:3000/auth/signup", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
 			},
+			body: JSON.stringify({ username, email, password }),
 		});
 
-		setUsername("");
-		setEmail("");
-		setPassword("");
+		// // Extract the JWT from the response
+		const { accessToken, refreshToken } = await response.json();
+
+		// // Store the token in cookie
+		TokenService.updateLocalAccessToken(accessToken);
+		TokenService.updateLocalRefreshToken(refreshToken);
+
+		Router.push("/");
 	}
 
 	return (

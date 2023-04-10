@@ -19,23 +19,7 @@ export class AuthService {
 		private configService: ConfigService
 	) {}
 
-	async validateUser(username: string, pass: string): Promise<any> {
-		const user = await this.userService.getUserByUsername(username);
-		const isPasswordMatching = await bcrypt.compare(pass, user.password);
-		return isPasswordMatching ? user : null;
-	}
-
-	async login(user: any) {
-		const payload = { username: user.username, sub: user.id };
-
-		return {
-			access_token: this.jwtService.sign(payload),
-		};
-	}
-
 	async signUp(createUserDto: CreateUserDto): Promise<any> {
-		// const payload = { username: user.username, sub: user.id };
-
 		// Check if user exists
 		const userExists = await this.userService.getUserByUsername(
 			createUserDto.username
