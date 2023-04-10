@@ -17,5 +17,6 @@ type User {
   email: String!
   id: String!
   password: String!
+  refresh_token: String!
   username: String!
 }

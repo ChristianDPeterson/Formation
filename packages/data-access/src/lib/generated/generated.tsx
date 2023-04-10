@@ -30,6 +30,7 @@ export type MutationCreateUserArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllUsers: Array<User>;
+  getCurrentUser: User;
   getUserById: User;
   healthCheck: Scalars['String'];
 };

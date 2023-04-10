@@ -19,4 +19,10 @@ export class UserInput {
 		description: "Password that will be visible",
 	})
 	password: string;
+
+	@Field(() => String, {
+		nullable: false,
+		description: "Refresh token that will be visible",
+	})
+	refresh_token: string;
 }

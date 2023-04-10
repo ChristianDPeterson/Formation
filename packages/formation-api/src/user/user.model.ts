@@ -14,4 +14,7 @@ export class User implements UserClient {
 
 	@Field(() => String)
 	password: string;
+
+	@Field(() => String)
+	refresh_token: string;
 }

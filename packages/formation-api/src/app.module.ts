@@ -6,6 +6,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { GraphQLBackendModule } from "./graphql/graphql.module";
 import { AuthModule } from "./auth/auth.module";
+import { AuthController } from "./auth/auth.controller";
 
 @Module({
 	imports: [
@@ -19,7 +20,7 @@ import { AuthModule } from "./auth/auth.module";
 		// PubSubModule,
 		// LoggerModule,
 	],
-	controllers: [AppController], // AppController
+	controllers: [AppController, AuthController], // AppController
 	providers: [AppService],
 })
 export class AppModule {}
