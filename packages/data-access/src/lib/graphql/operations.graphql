@@ -15,6 +15,14 @@ mutation createUser($username: String!, $email: String!, $password: String!) {
 	}
 }
 
+query getCurrentUser {
+	getCurrentUser {
+		id
+		username
+		email
+	}
+}
+
 # mutation addSet($name: String!, $year: String!, $numParts: Int!) {
 # 	addSet(name: $name, year: $year, numParts: $numParts) {
 # 		id

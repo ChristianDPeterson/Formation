@@ -7,9 +7,9 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";
 
-import { User } from "@prisma/client";
-
 import { UserService } from "../user/user.service";
+import { CreateUserDto } from "../user/dto/create-user.dto";
+import { AuthDto } from "./dto/auth.dto";
 
 @Injectable()
 export class AuthService {
@@ -101,7 +101,7 @@ export class AuthService {
 				},
 				{
 					secret: this.configService.get<string>("JWT_ACCESS_SECRET"),
-					expiresIn: "15m",
+					expiresIn: "60s",
 				}
 			),
 			this.jwtService.signAsync(
@@ -126,12 +126,13 @@ export class AuthService {
 
 	async refreshTokens(userId: string, refreshToken: string) {
 		const user = await this.userService.getUserById(userId);
+		console.log({ user });
 		if (!user || !user.refresh_token)
 			throw new ForbiddenException("Access Denied");
 
 		const refreshTokenMatches = await bcrypt.compare(
-			user.refresh_token,
-			refreshToken
+			refreshToken,
+			user.refresh_token
 		);
 		if (!refreshTokenMatches) throw new ForbiddenException("Access Denied");
 

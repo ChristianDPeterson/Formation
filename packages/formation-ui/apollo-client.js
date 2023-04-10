@@ -11,12 +11,12 @@ import { onError } from "@apollo/client/link/error";
 import { TokenService } from "./services/token.service";
 
 const httpLink = createHttpLink({
-	uri: "/graphql",
+	uri: "http://localhost:3000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
-	const token = TokenService.getLocalAccessToken();
+	const token = localStorage.getItem("token");
 	// return the headers to the context so httpLink can read them
 	return {
 		headers: {
@@ -37,18 +37,26 @@ const errorLink = onError(
 
 						// use Observable to refresh to token and retry the request
 						return fromPromise(
-							refreshToken()
-								.catch(
-									(error) => {
-										// Handle token refresh errors e.g clear stored tokens, redirect to login, ...
-										return;
-									}
-									// retry the request, returning the new observable
-								)
-								.then(() => {
-									return forward(operation);
-								})
-						);
+							refreshToken().catch((error) => {
+								// Handle token refresh errors e.g clear stored tokens, redirect to login
+								return;
+							})
+						)
+							.filter((value) => Boolean(value))
+							.flatMap((accessToken) => {
+								const oldHeaders =
+									operation.getContext().headers;
+								// modify the operation context with a new token
+								operation.setContext({
+									headers: {
+										...oldHeaders,
+										authorization: `Bearer ${accessToken}`,
+									},
+								});
+
+								// retry the request, returning the new observable
+								return forward(operation);
+							});
 				}
 			}
 		}
@@ -60,27 +68,33 @@ const errorLink = onError(
 // Request a refresh token to then stores and returns the accessToken.
 const refreshToken = async () => {
 	try {
+		// get the refresh token
+		const refreshToken = localStorage.getItem("refresh_token");
+
 		// use fetch to access the refresh token endpoint
-		const refresh = await fetch("http://localhost:3000/refresh_token", {
-			method: "POST",
-			credentials: "include",
+		const refresh = await fetch("http://localhost:3000/auth/refresh", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				authorization: `Bearer ${refreshToken}`,
+			},
 		});
 
-		console.log({ refresh });
 		// get the json response
 		const { accessToken } = await refresh.json();
+		localStorage.setItem("token", accessToken);
 
-		TokenService.updateLocalAccessToken(accessToken);
 		return accessToken;
 	} catch (err) {
-		localStorage.clear();
+		// localStorage.clear();
+		console.log({ err });
 		throw err;
 	}
 };
 
 const client = new ApolloClient({
 	link: ApolloLink.from([errorLink, authLink, httpLink]),
-	uri: "http://localhost:3000/graphql",
+	// uri: "http://localhost:3000/graphql",
 	cache: new InMemoryCache(),
 	connectToDevTools: true,
 });

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Router from "next/router";
-import { useUser } from "../lib/hooks";
 import TokenService from "../services/token.service";
 // import Layout from "../components/layout";
 // import Form from "../components/form";
@@ -37,11 +36,7 @@ const Login = () => {
 			// // Do something the token in the login method
 			// await login({ jwt_token });
 
-			// if (res.status === 200) {
-			// 	Router.push("/");
-			// } else {
-			// 	throw new Error(await res.text());
-			// }
+			Router.push("/");
 		} catch (error) {
 			console.error("An unexpected error happened occurred:", error);
 			setErrorMsg(error.message);
