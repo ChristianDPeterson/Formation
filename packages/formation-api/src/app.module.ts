@@ -1,26 +1,15 @@
 import { Module } from "@nestjs/common";
-import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { GraphQLBackendModule } from "./graphql/graphql.module";
 import { AuthModule } from "./auth/auth.module";
 import { AuthController } from "./auth/auth.controller";
+import { FormModule } from "./resources/form/form.module";
 
 @Module({
-	imports: [
-		// ConfigModule.forRoot({
-		// 	load: [redisConfig],
-		// 	cache: true,
-		// }),
-		GraphQLBackendModule,
-		AuthModule,
-		// RedisClientModule,
-		// PubSubModule,
-		// LoggerModule,
-	],
-	controllers: [AppController, AuthController], // AppController
+	imports: [GraphQLBackendModule, AuthModule, FormModule],
+	controllers: [AppController, AuthController],
 	providers: [AppService],
 })
 export class AppModule {}

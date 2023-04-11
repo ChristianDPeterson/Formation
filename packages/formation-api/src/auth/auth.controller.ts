@@ -1,12 +1,12 @@
 import { Controller, Get, Post, UseGuards, Body, Req } from "@nestjs/common";
 import { Request } from "express";
 
-import { LocalAuthGuard } from "./local-auth.guard";
+import { LocalAuthGuard } from "./local/local.guard";
 import { AuthService } from "./auth.service";
-import { GqlAuthGuard } from "./gql-auth.guard";
-import { RefreshTokenGuard } from "./refreshToken.guard";
+import { JwtAuthGuard } from "./jwt/jwt.guard";
+import { RefreshTokenGuard } from "./refreshToken/refreshToken.guard";
 import { AuthDto } from "./dto/auth.dto";
-import { CreateUserDto } from "../user/dto/create-user.dto";
+import { CreateUserDto } from "../resources/user/dto/create-user.dto";
 
 @Controller()
 export class AuthController {
@@ -22,7 +22,7 @@ export class AuthController {
 		return this.authService.signIn(data);
 	}
 
-	@UseGuards(GqlAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	@Get("auth/logout")
 	logout(@Req() req: Request) {
 		this.authService.logout(req.user["sub"]);

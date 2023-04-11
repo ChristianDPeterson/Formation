@@ -8,10 +8,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
-import { TokenService } from "./services/token.service";
-
 const httpLink = createHttpLink({
-	uri: "http://localhost:3000/graphql",
+	uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -72,13 +70,16 @@ const refreshToken = async () => {
 		const refreshToken = localStorage.getItem("refresh_token");
 
 		// use fetch to access the refresh token endpoint
-		const refresh = await fetch("http://localhost:3000/auth/refresh", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				authorization: `Bearer ${refreshToken}`,
-			},
-		});
+		const refresh = await fetch(
+			process.env.NEXT_PUBLIC_AUTH_REFRESH_ENDPOINT,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					authorization: `Bearer ${refreshToken}`,
+				},
+			}
+		);
 
 		// get the json response
 		const { accessToken } = await refresh.json();
@@ -94,7 +95,6 @@ const refreshToken = async () => {
 
 const client = new ApolloClient({
 	link: ApolloLink.from([errorLink, authLink, httpLink]),
-	// uri: "http://localhost:3000/graphql",
 	cache: new InMemoryCache(),
 	connectToDevTools: true,
 });

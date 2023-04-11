@@ -11,13 +11,16 @@ const App = () => {
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		const response = await fetch("http://localhost:3000/auth/signup", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ username, email, password }),
-		});
+		const response = await fetch(
+			process.env.NEXT_PUBLIC_AUTH_SIGNUP_ENDPOINT,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ username, email, password }),
+			}
+		);
 
 		// // Extract the JWT from the response
 		const { accessToken, refreshToken } = await response.json();

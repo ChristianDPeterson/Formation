@@ -2,11 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateFormInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Form {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Mutation {
+  createForm(createFormInput: CreateFormInput!): Form!
+  removeForm(id: Int!): Form!
+  updateForm(updateFormInput: UpdateFormInput!): Form!
+}
+
 type Query {
+  form(id: Int!): Form!
   getAllUsers: [User!]!
   getCurrentUser: User!
   getUserById(id: String!): User!
   healthCheck: String!
+}
+
+input UpdateFormInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 type User {

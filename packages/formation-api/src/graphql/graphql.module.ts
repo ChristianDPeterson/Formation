@@ -4,7 +4,7 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 
 import { GraphQLResolver } from "./graphql.resolver";
-import { UserModule } from "../user/user.module";
+import { UserModule } from "../resources/user/user.module";
 import { join } from "path";
 
 @Module({
@@ -30,26 +30,26 @@ import { join } from "path";
 			// 		statusCode: GraphQLHelper.getStatusCode(error),
 			// 	};
 			// },
-			context: ({ req, res, connection, payload, request, reply }) => {
-				return {
-					req,
-					res,
-					connection,
-					payload,
-					request,
-					reply,
-				};
-			},
-			subscriptions: {
-				"subscriptions-transport-ws": {
-					onConnect: (connectionParams: Record<string, unknown>) => {
-						return {
-							isSubscription: true,
-							...connectionParams,
-						};
-					},
-				},
-			},
+			// context: ({ req, res, connection, payload, request, reply }) => {
+			// 	return {
+			// 		req,
+			// 		res,
+			// 		connection,
+			// 		payload,
+			// 		request,
+			// 		reply,
+			// 	};
+			// },
+			// subscriptions: {
+			// 	"subscriptions-transport-ws": {
+			// 		onConnect: (connectionParams: Record<string, unknown>) => {
+			// 			return {
+			// 				isSubscription: true,
+			// 				...connectionParams,
+			// 			};
+			// 		},
+			// 	},
+			// },
 		}),
 		// modules
 		UserModule,

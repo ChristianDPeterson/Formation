@@ -18,13 +18,16 @@ const Login = () => {
 		};
 
 		try {
-			const response = await fetch("http://localhost:3000/auth/signin", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(body),
-			});
+			const response = await fetch(
+				process.env.NEXT_PUBLIC_AUTH_SIGNIN_ENDPOINT,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(body),
+				}
+			);
 
 			// // Extract the JWT from the response
 			const { accessToken, refreshToken } = await response.json();

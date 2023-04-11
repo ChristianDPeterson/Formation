@@ -7,9 +7,10 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import * as bcrypt from "bcrypt";
 
-import { UserService } from "../user/user.service";
-import { CreateUserDto } from "../user/dto/create-user.dto";
+import { UserService } from "../resources/user/user.service";
+import { CreateUserDto } from "../resources/user/dto/create-user.dto";
 import { AuthDto } from "./dto/auth.dto";
+import { User } from "@prisma/client";
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,17 @@ export class AuthService {
 		private jwtService: JwtService,
 		private configService: ConfigService
 	) {}
+
+	async validate(username: string, password: string): Promise<User> {
+		const user = await this.userService.getUserByUsername(username);
+		if (!user) throw new BadRequestException("User does not exist");
+
+		const passwordMatches = await bcrypt.compare(password, user.password);
+		if (!passwordMatches)
+			throw new BadRequestException("Password is incorrect");
+
+		return user;
+	}
 
 	async signUp(createUserDto: CreateUserDto): Promise<any> {
 		// Check if user exists
@@ -41,23 +53,17 @@ export class AuthService {
 	}
 
 	async signIn(data: AuthDto) {
-		console.log({ data });
-		// Check if user exists
-		const user = await this.userService.getUserByUsername(data.username);
-		if (!user) throw new BadRequestException("User does not exist");
+		const existingUser = await this.validate(data.username, data.password);
 
-		const hashed = await this.hashData(data.password);
-		console.log(data.password, user.password, hashed);
+		if (!existingUser) {
+			throw new ForbiddenException("Invalid credentials");
+		}
 
-		const passwordMatches = await bcrypt.compare(
-			data.password,
-			user.password
+		const tokens = await this.getTokens(
+			existingUser.id,
+			existingUser.username
 		);
-		if (!passwordMatches)
-			throw new BadRequestException("Password is incorrect");
-
-		const tokens = await this.getTokens(user.id, user.username);
-		await this.updateRefreshToken(user.id, tokens.refreshToken);
+		await this.updateRefreshToken(existingUser.id, tokens.refreshToken);
 		return tokens;
 	}
 
@@ -110,7 +116,6 @@ export class AuthService {
 
 	async refreshTokens(userId: string, refreshToken: string) {
 		const user = await this.userService.getUserById(userId);
-		console.log({ user });
 		if (!user || !user.refresh_token)
 			throw new ForbiddenException("Access Denied");
 
