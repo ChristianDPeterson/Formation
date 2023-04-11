@@ -9,7 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 
 const httpLink = createHttpLink({
-	uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+	uri: import.meta.env.VITE_GRAPHQL_ENDPOINT,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -27,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(
 	({ graphQLErrors, networkError, operation, forward }) => {
 		if (graphQLErrors) {
-			for (let err of graphQLErrors) {
+			for (const err of graphQLErrors) {
 				switch (err.extensions.code) {
 					case "UNAUTHENTICATED":
 						// ignore 401 error for a refresh request
@@ -64,14 +64,14 @@ const errorLink = onError(
 );
 
 // Request a refresh token to then stores and returns the accessToken.
-const refreshToken = async () => {
+export const refreshToken = async () => {
 	try {
 		// get the refresh token
 		const refreshToken = localStorage.getItem("refresh_token");
 
 		// use fetch to access the refresh token endpoint
 		const refresh = await fetch(
-			process.env.NEXT_PUBLIC_AUTH_REFRESH_ENDPOINT,
+			import.meta.env.VITE_AUTH_REFRESH_ENDPOINT,
 			{
 				method: "GET",
 				headers: {

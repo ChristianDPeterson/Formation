@@ -7,6 +7,8 @@ import { JwtAuthGuard } from "./jwt/jwt.guard";
 import { RefreshTokenGuard } from "./refreshToken/refreshToken.guard";
 import { AuthDto } from "./dto/auth.dto";
 import { CreateUserDto } from "../resources/user/dto/create-user.dto";
+import { User } from "../resources/user/user.model";
+import { CurrentUser } from "../resources/user/user.decorator";
 
 @Controller()
 export class AuthController {
@@ -24,8 +26,8 @@ export class AuthController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get("auth/logout")
-	logout(@Req() req: Request) {
-		this.authService.logout(req.user["sub"]);
+	logout(@Req() req: Request, @CurrentUser() user: User) {
+		this.authService.logout(user.id);
 	}
 
 	@UseGuards(RefreshTokenGuard)

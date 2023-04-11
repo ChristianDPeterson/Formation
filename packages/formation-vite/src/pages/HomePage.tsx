@@ -1,12 +1,10 @@
-import React from "react";
-
 import {
 	useGetCurrentUserFormsQuery,
 	useGetCurrentUserQuery,
 } from "@formation/data-access";
 import FormInput from "../components/FormInput";
 
-const App = () => {
+function HomePage() {
 	const currentUserQuery = useGetCurrentUserQuery();
 	const currentUserFormsQuery = useGetCurrentUserFormsQuery({});
 
@@ -15,8 +13,9 @@ const App = () => {
 	if (currentUserQuery.error || currentUserFormsQuery.error)
 		return <p>Error :(</p>;
 
-	const currentUser = currentUserQuery.data.getCurrentUser;
-	const currentUserForms = currentUserFormsQuery.data.getCurrentUserForms;
+	const currentUser = currentUserQuery.data?.getCurrentUser;
+	const currentUserForms =
+		currentUserFormsQuery.data?.getCurrentUserForms || [];
 
 	return (
 		<>
@@ -42,6 +41,6 @@ const App = () => {
 			<FormInput />
 		</>
 	);
-};
+}
 
-export default App;
+export default HomePage;
