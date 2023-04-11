@@ -3,33 +3,53 @@
 # ------------------------------------------------------
 
 input CreateFormInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Name of the form"""
+  name: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Form {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Date the form was created"""
+  createdAt: DateTime!
+
+  """ID of the form"""
+  id: String!
+
+  """Name of the form"""
+  name: String!
+
+  """Date the form was last updated"""
+  updatedAt: DateTime!
+
+  """Owner of the form"""
+  userId: String!
 }
 
 type Mutation {
   createForm(createFormInput: CreateFormInput!): Form!
-  removeForm(id: Int!): Form!
+  removeForm(id: String!): Form!
   updateForm(updateFormInput: UpdateFormInput!): Form!
 }
 
 type Query {
-  form(id: Int!): Form!
   getAllUsers: [User!]!
   getCurrentUser: User!
+  getCurrentUserForms: [Form!]!
+  getForm(id: String!): Form!
   getUserById(id: String!): User!
   healthCheck: String!
 }
 
 input UpdateFormInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """ID of the form"""
+  id: String!
+
+  """Name of the form"""
+  name: String!
 }
 
 type User {

@@ -4,7 +4,6 @@ import { UserResolver } from "./user.resolver";
 import { UserService } from "./user.service";
 
 @Module({
-	// imports: [forwardRef(() => MovieCommentModule)],
 	providers: [PrismaService, UserService, UserResolver],
 	exports: [UserService, UserResolver],
 })

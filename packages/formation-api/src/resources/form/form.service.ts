@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateFormInput } from './dto/create-form.input';
-import { UpdateFormInput } from './dto/update-form.input';
+import { Injectable } from "@nestjs/common";
+import { CreateFormInput } from "./dto/create-form.input";
+import { UpdateFormInput } from "./dto/update-form.input";
+import { PrismaService } from "../../../prisma/prisma.service";
+import { User } from "../user/user.model";
 
 @Injectable()
 export class FormService {
-  create(createFormInput: CreateFormInput) {
-    return 'This action adds a new form';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all form`;
-  }
+	create(createFormInput: CreateFormInput, userId: string) {
+		return this.prisma.form.create({
+			data: {
+				...createFormInput,
+				userId,
+			},
+		});
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} form`;
-  }
+	// getAllForms() {
+	// 	return this.prisma.form.findMany();
+	// }
 
-  update(id: number, updateFormInput: UpdateFormInput) {
-    return `This action updates a #${id} form`;
-  }
+	getForm(id: string) {
+		return this.prisma.form.findUnique({
+			where: {
+				id,
+			},
+		});
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} form`;
-  }
+	getAllFormsForUser(userId: string) {
+		return this.prisma.form.findMany({
+			where: {
+				userId,
+			},
+		});
+	}
+
+	update(id: string, updateFormInput: UpdateFormInput) {
+		return this.prisma.form.update({
+			where: {
+				id: id,
+			},
+			data: {
+				...updateFormInput,
+			},
+		});
+	}
+
+	remove(id: string) {
+		return this.prisma.form.delete({
+			where: {
+				id: id,
+			},
+		});
+	}
 }

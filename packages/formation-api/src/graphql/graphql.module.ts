@@ -1,11 +1,11 @@
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
-// import { ConfigModule } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { join } from "path";
 
 import { GraphQLResolver } from "./graphql.resolver";
 import { UserModule } from "../resources/user/user.module";
-import { join } from "path";
+import { FormModule } from "../resources/form/form.module";
 
 @Module({
 	imports: [
@@ -53,6 +53,7 @@ import { join } from "path";
 		}),
 		// modules
 		UserModule,
+		FormModule,
 	],
 	providers: [GraphQLResolver],
 })

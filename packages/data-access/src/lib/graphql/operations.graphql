@@ -14,3 +14,33 @@ query getCurrentUser {
 # 		year
 # 	}
 # }
+
+mutation createForm($createFormInput: CreateFormInput!) {
+	createForm(createFormInput: $createFormInput) {
+		id
+		name
+		userId
+		createdAt
+		updatedAt
+	}
+}
+
+query getForm($id: String!) {
+	getForm(id: $id) {
+		id
+		name
+		userId
+		createdAt
+		updatedAt
+	}
+}
+
+query getCurrentUserForms {
+	getCurrentUserForms {
+		id
+		name
+		userId
+		createdAt
+		updatedAt
+	}
+}
