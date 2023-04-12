@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { fakeAuthProvider } from "./auth.provider";
+import { authProvider } from "./auth.provider";
 import React from "react";
 
 interface AuthContextType {
@@ -22,14 +22,14 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 		password: string,
 		callback: VoidFunction
 	) => {
-		return fakeAuthProvider.signin(username, password, () => {
+		return authProvider.signin(username, password, () => {
 			setUser(username);
 			callback();
 		});
 	};
 
 	const signout = (callback: VoidFunction) => {
-		return fakeAuthProvider.signout(() => {
+		return authProvider.signout(() => {
 			setUser(null);
 			callback();
 		});

@@ -70,4 +70,4 @@ const authProvider = {
 	},
 };
 
-export { authProvider as fakeAuthProvider };
+export { authProvider };

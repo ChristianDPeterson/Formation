@@ -10,13 +10,12 @@ import { AuthProvider } from "./app/auth";
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
 );
+
 root.render(
 	<StrictMode>
 		<AuthProvider>
 			<ApolloProvider client={client}>
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
+				<App />
 			</ApolloProvider>
 		</AuthProvider>
 	</StrictMode>

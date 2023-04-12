@@ -2,11 +2,16 @@ import {
 	useGetCurrentUserFormsQuery,
 	useGetCurrentUserQuery,
 } from "@formation/data-access";
-import FormInput from "../components/FormInput";
+import FormInput from "../components/FormInput/FormInput";
+import { useAuth } from "../app/auth";
+import { Dashboard } from "../components/Dashboard";
 
 function HomePage() {
+	const auth = useAuth();
 	const currentUserQuery = useGetCurrentUserQuery();
 	const currentUserFormsQuery = useGetCurrentUserFormsQuery({});
+
+	console.log({ auth });
 
 	if (currentUserQuery.loading || currentUserFormsQuery.loading)
 		return <p>Loading...</p>;
@@ -28,17 +33,8 @@ function HomePage() {
 					</div>
 				)}
 			</div>
-
-			<ul>
-				{currentUserForms &&
-					currentUserForms.map((form) => (
-						<li key={form.id}>
-							{form.id} - <strong>{form.name}</strong> -{" "}
-							{form.userId} - {form.createdAt} - {form.updatedAt}
-						</li>
-					))}
-			</ul>
 			<FormInput />
+			<Dashboard forms={currentUserForms} />
 		</>
 	);
 }

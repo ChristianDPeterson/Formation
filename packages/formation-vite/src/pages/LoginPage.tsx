@@ -1,12 +1,18 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../app/auth";
 
 function LoginPage() {
 	const navigate = useNavigate();
-	const location = useLocation();
 	const auth = useAuth();
 
-	const from = location.state?.from?.pathname || "/";
+	console.log(auth);
+
+	if (auth.user) {
+		// If they're already logged in, send them to the home page.
+		return <Navigate to="/home" replace />;
+	}
+
+	// const from = location.state?.from?.pathname || "/";
 
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -22,14 +28,12 @@ function LoginPage() {
 			// when they get to the protected page and click the back button, they
 			// won't end up back on the login page, which is also really nice for the
 			// user experience.
-			navigate(from, { replace: true });
+			navigate("/home");
 		});
 	}
 
 	return (
 		<div>
-			<p>You must log in to view the page at {from}</p>
-
 			<form onSubmit={handleSubmit}>
 				<label>
 					Username: <input name="username" type="text" />
