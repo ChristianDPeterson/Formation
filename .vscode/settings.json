@@ -3,5 +3,6 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "typescript.tsdk": "./apps/formation/node_modules/typescript/lib"
 }
