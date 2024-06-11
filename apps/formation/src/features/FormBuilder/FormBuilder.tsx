@@ -18,13 +18,9 @@ export function FormBuilder() {
 							<Card p={4}>
 								<FormElement
 									formElement={formElement}
-									onChange={(
-										updatedFormElement: FormElementType,
-									) => {
-										const newFormElements =
-											formElements.slice(0)
-										newFormElements[index] =
-											updatedFormElement
+									onChange={(updatedFormElement: FormElementType) => {
+										const newFormElements = formElements.slice(0)
+										newFormElements[index] = updatedFormElement
 										setFormElements(newFormElements)
 									}}
 								></FormElement>
