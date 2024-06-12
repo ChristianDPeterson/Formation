@@ -1,8 +1,6 @@
-import { EventEmitter } from 'events';
-import { initTRPC, TRPCError } from '@trpc/server';
+import { initTRPC } from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
-import { z } from 'zod';
 import cors from "cors";
 
 const createContext = ({

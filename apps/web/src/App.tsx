@@ -37,5 +37,3 @@ export function App() {
 		</trpc.Provider>
 	)
 }
-
-export default App

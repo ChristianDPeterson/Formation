@@ -1,14 +1,5 @@
 {
   "extends": "@formation/typescript-config/base.json",
-  "compilerOptions": {
-    "lib": ["esnext", "dom"],
-    "target": "esnext",
-    "esModuleInterop": true,
-    "strict": true,
-    "moduleResolution": "NodeNext",
-    "noEmit": true,
-    "skipLibCheck": true
-  },
-  "include": ["src"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "exclude": ["node_modules"]
 }
