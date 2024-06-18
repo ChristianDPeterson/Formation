@@ -3,6 +3,8 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
 import cors from "cors";
 
+import prisma from "@formation/database"
+
 const createContext = ({
   req,
   res,
@@ -37,6 +39,10 @@ const appRouter = router({
     return {
       message: 'hello world',
     };
+  }),
+
+  users: publicProcedure.query(() => {
+    return prisma.user.findMany();
   }),
  
   // Mutations are the best place to do things like updating a database

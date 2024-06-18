@@ -18,6 +18,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@formation/database": "workspace:*",
     "@formation/eslint-config": "workspace:*",
     "@formation/typescript-config": "workspace:*",
     "@types/cors": "^2.8.17",
