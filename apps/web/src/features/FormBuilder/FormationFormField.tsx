@@ -4,13 +4,7 @@ import {
 	FormLabel as ChakraFormLabel,
 	Select as ChakraSelect,
 } from "@chakra-ui/react"
-import {
-	FieldHookConfig,
-	Formik,
-	FormikHelpers,
-	FormikProps,
-	useField,
-} from "formik"
+import { FieldHookConfig, Formik, FormikHelpers, FormikProps, useField } from "formik"
 import {
 	Input as ChakraInput,
 	InputProps as ChakraInputProps,
@@ -33,10 +27,7 @@ export function FormationFormField({ formElement, onSubmit }: FormFieldProps) {
 				initialValue: formElement?.initialValue,
 				fieldLabel: formElement?.fieldLabel,
 			}}
-			onSubmit={(
-				values: FormElementType,
-				{ setSubmitting }: FormikHelpers<FormElementType>,
-			) => {
+			onSubmit={(values: FormElementType, { setSubmitting }: FormikHelpers<FormElementType>) => {
 				console.log({ values })
 				onSubmit(values)
 				setSubmitting(false)
@@ -68,12 +59,7 @@ export function FormationFormField({ formElement, onSubmit }: FormFieldProps) {
 
 						<Input name='fieldLabel' />
 					</ChakraFormControl>
-					<Button
-						mt={4}
-						colorScheme='teal'
-						isLoading={props.isSubmitting}
-						type='submit'
-					>
+					<Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
 						Save
 					</Button>
 				</form>

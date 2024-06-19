@@ -26,11 +26,7 @@ export function FormElement({ formElement, onChange }) {
 		return (
 			<FormControl>
 				<FormLabel>{formElement.fieldLabel}</FormLabel>
-				<Input
-					readOnly
-					type={formElement.fieldType}
-					placeholder={formElement.initialValue}
-				/>
+				<Input readOnly type={formElement.fieldType} placeholder={formElement.initialValue} />
 				<Button
 					mt={4}
 					colorScheme='teal'
