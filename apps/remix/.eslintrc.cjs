@@ -6,7 +6,7 @@
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  root: true,
+  // root: true,
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -46,6 +46,10 @@ module.exports = {
         ],
         "import/resolver": {
           typescript: {},
+          alias: {
+            map: [["~", "./app/"]],
+            extensions: [".ts", ".js", ".tsx"],
+          },
         },
       },
     },
@@ -63,6 +67,10 @@ module.exports = {
           },
           typescript: {
             alwaysTryTypes: true,
+          },
+          alias: {
+            map: [["~", "./app/"]],
+            extensions: [".ts", ".js", ".tsx"],
           },
         },
       },

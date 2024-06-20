@@ -1,9 +1,9 @@
 import * as trpcExpress from "@trpc/server/adapters/express";
-import express from "express";
 import cors from "cors";
+import express from "express";
 
 import { appRouter } from "./routers/_app";
-import { createContext, router } from "./trpc";
+import { createContext } from "./trpc";
 
 export type AppRouter = typeof appRouter;
 

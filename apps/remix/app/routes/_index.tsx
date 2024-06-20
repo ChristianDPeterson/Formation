@@ -1,7 +1,6 @@
-import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { client } from "../utils/api";
-import { appRouter, createCaller } from "./trpc.server";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { json, useLoaderData } from "@remix-run/react";
+import { getUser } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,19 +9,19 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = () => {
-  const caller = createCaller({ user: {} });
+export async function loader({ request }: LoaderFunctionArgs) {
+  const user = await getUser(request);
 
-  return caller.user.list();
-};
+  return json(user);
+}
 
 export default function Index() {
-  const data = useLoaderData();
+  const user = useLoaderData<typeof loader>();
 
   return (
     <div className="font-sans p-4">
       <h1 className="text-3xl">Welcome to Remix</h1>
-      <p>{JSON.stringify(data)}</p>
+      <p>{JSON.stringify(user)}</p>
       <ul className="list-disc mt-4 pl-6 space-y-2">
         <li>
           <a

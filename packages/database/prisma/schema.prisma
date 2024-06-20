@@ -16,9 +16,18 @@ model User {
   updatedAt DateTime @updatedAt
 
   name          String?
-  email         String?   @unique
+  username      String?
+  email         String    @unique
   emailVerified DateTime?
-  tables        Table[]
+  password      String
+  role          Role      @default(USER)
+
+  tables Table[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model Table {
