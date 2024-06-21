@@ -1,12 +1,23 @@
+import { LoaderFunctionArgs, json } from "@remix-run/node";
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useRouteError,
 } from "@remix-run/react";
 import "~/tailwind.css";
+import Navbar from "./components/Navbar";
+import { getUserId } from "./session.server";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const userId = await getUserId(request);
+  const isLoggedIn = !!userId;
+
+  return json({ isLoggedIn });
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -28,7 +39,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export function ErrorBoundary() {
   const error = useRouteError();
-  console.error(error);
   return (
     <html lang="en">
       <head>
@@ -39,7 +49,7 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body>
-        {/* add the UI you want your users to see */}
+        {JSON.stringify(error)}
         <Scripts />
       </body>
     </html>
@@ -47,5 +57,11 @@ export function ErrorBoundary() {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { isLoggedIn } = useLoaderData<typeof loader>();
+  return (
+    <>
+      <Navbar isLoggedIn={isLoggedIn} />
+      <Outlet />
+    </>
+  );
 }

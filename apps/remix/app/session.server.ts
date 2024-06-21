@@ -24,7 +24,14 @@ export async function requireUserSession(request: Request) {
     // in the `ErrorBoundary`.
     throw redirect("/login", 302);
   }
-  return session.get(USER_SESSION_KEY);
+
+  const userId = session.get(USER_SESSION_KEY);
+
+  if (!userId) {
+    throw redirect("/login", 302);
+  }
+
+  return userId;
 }
 
 const { getSession, commitSession, destroySession } =
@@ -53,10 +60,8 @@ export async function getUserId(request: Request): Promise<string | undefined> {
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
-  console.log({ userId });
   if (!userId) return null;
   const user = await prisma.user.findUnique({ where: { id: userId } });
-  console.log({ user });
   return user;
 }
 
